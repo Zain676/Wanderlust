@@ -30,10 +30,9 @@ body {
 /* Footer */
 
 footer {
-  background-color: #ebebeb;
   padding: 20px;
   text-align: center;
-  margin-top: auto;
+  margin-top: 5rem;
 }
 
 .f-info-links a {
@@ -155,43 +154,65 @@ footer {
 }
 
 .navbar-toggler {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    outline: none !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .toggler-custom-icon {
-    font-size: 1.5rem !important;
-    color: #333 !important;
-    transition: color 0.2s ease-in-out !important;
+  font-size: 1.5rem !important;
+  color: #333 !important;
+  transition: color 0.2s ease-in-out !important;
 }
 
 .toggler-custom-icon:hover {
-    color: #fe434d !important; 
-    cursor: pointer !important;
+  color: #fe434d !important;
+  cursor: pointer !important;
 }
 
 
-
-/* Footer */
+@media (max-width: 992px) {
+  .show {
+    width: 100% !important;
+    margin: 0 0 0 0 !important;
+  }
+  .show-title {
+    width: 95% !important;
+    margin:  0 0 0 0 !important;
+  }
+  .show-card {
+    width: 95% !important;
+    margin:  0 0 0 0 !important;
+  }
+  .card-img-overlay {
+    padding: 0% !important;
+  }
+  .show-btns {
+    width: 95% !important;
+    margin:  0 0 0 0 !important;
+  }
+  .show-review {
+    width: 95% !important;
+    margin:  0 0 0 0 !important;
+  }
+}
 
 @media (max-width: 768px) {
-    .footer-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .footer-bottom {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
-    
-    .legal-links {
-        justify-content: center;
-    }
-}
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
 
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .legal-links {
+    justify-content: center;
+  }
+}
 
 @media (max-width: 768px) {
   .search-bar form {
@@ -241,4 +262,16 @@ footer {
     margin: 0 0 0 1rem !important;
     width: 95% !important;
   }
+  .success {
+    width: 90% !important;
+    margin: auto !important;
+    font-size: small !important;
+  }
+  .error {
+    width: 90% !important;
+    margin: auto !important;
+    font-size: small !important;
+  }
 }
+
+
