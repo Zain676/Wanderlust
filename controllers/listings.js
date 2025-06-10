@@ -78,30 +78,58 @@ module.exports.renderEditForm = async (req, res) => {
   res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
-module.exports.updateListing = async (req, res) => {
-  // Geocode if location changed
-  if (req.body.listing.city) {
-    const geoResponse = await axios.get(
-      `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(req.body.listing.city)}.json?key=${TOMTOM_API_KEY}`
-    );
-    req.body.listing.coordinates = {
-      lat: geoResponse.data.results[0].position.lat,
-      lng: geoResponse.data.results[0].position.lon
-    };
+module.exports.updateListing = async (req, res, next) => {
+  try {
+    let { id } = req.params;
+    const existingListing = await Listing.findById(id);
+    
+    // 1. Handle geocoding if city changed
+    if (req.body.listing.city && req.body.listing.city !== existingListing.city) {
+      const geoResponse = await axios.get(
+        `https://api.tomtom.com/search/2/geocode/${
+          encodeURIComponent(req.body.listing.city)
+        }.json?key=${TOMTOM_API_KEY}`
+      );
+      
+      if (!geoResponse.data.results || geoResponse.data.results.length === 0) {
+        throw new Error('Invalid location');
+      }
+      
+      req.body.listing.coordinates = {
+        lat: geoResponse.data.results[0].position.lat,
+        lng: geoResponse.data.results[0].position.lon
+      };
+    } else {
+      // Preserve existing coordinates if city didn't change
+      req.body.listing.coordinates = existingListing.coordinates;
+    }
+
+    // 2. Preserve category if not provided (or validate if changed)
+    if (!req.body.listing.category) {
+      req.body.listing.category = existingListing.category;
+    }
+
+    // 3. Handle image update
+    const updateData = { ...req.body.listing };
+    if (req.file) {
+      updateData.image = {
+        url: req.file.path,
+        filename: req.file.filename
+      };
+    }
+
+    // 4. Perform the update
+    await Listing.findByIdAndUpdate(id, updateData);
+
+    req.flash("success", "Listing Updated");
+    res.redirect(`/listings/${id}`);
+  } catch (err) {
+    if (err.message === 'Invalid location') {
+      req.flash('error', 'Could not find coordinates for the specified city');
+      return res.redirect(`/listings/${id}/edit`);
+    }
+    next(err);
   }
-
-  let { id } = req.params;
-  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-
-  if (typeof req.file !== "undefined") {
-    let url = req.file.path;
-    let filename = req.file.filename;
-    listing.image = { url, filename };
-    await listing.save();  
-  }
-
-  req.flash("success", "Listing Updated");
-  res.redirect(`/listings/${id}`);
 };
 
 module.exports.destroyListing = async (req, res) => {

@@ -86,26 +86,19 @@
 
         <div class="mb-3">
           <label for="category" class="form-label">Category</label>
-          <select class="form-select" id="category" name="listing[category]" value="<%= listing.category %>"
+          <select class="form-select" id="category" name="listing[category]"
             required>
             <option value>Choose a category</option>
-            <option value="Budget">Budget</option>
-            <option value="Luxury">Luxury</option>
-            <option value="Family">Family</option>
-            <option value="Pet Friendly">Pet Friendly</option>
-            <option value="Beachside">Beachside</option>
-            <option value="Mountain">Mountain</option>
-            <option value="Private Room">Private Room</option>
-            <option value="Entire Home">Entire Home</option>
-            <option value="With Pool">With Pool</option>
-            <option value="Free Parking">Free Parking</option>
-            <option value="WiFi">WiFi</option>
-            <option value="City Center">City Center</option>
-            <option value="Quiet Area">Quiet Area</option>
-            <option value="Couples">Couples</option>
-            <option value="Adventure">Adventure</option>
-            <option value="Nature Stay">Nature Stay</option>
-            <option value="Unique Stays">Unique Stays</option>
+            <% const categories = ["Budget", "Luxury", "Family", "Pet Friendly",
+            "Beachside", "Mountain", "Private Room", "Entire Home", "With Pool",
+            "Free Parking", "WiFi", "City Center", "Quiet Area", "Couples",
+            "Adventure", "Nature Stay", "Unique Stays"]; %>
+            <% categories.forEach(cat => { %>
+            <option value="<%= cat %>" <%=listing.category === cat ? 'selected'
+              : '' %>>
+              <%= cat %>
+            </option>
+            <% }); %>
           </select>
           <div class="invalid-feedback">Please select a category</div>
         </div>

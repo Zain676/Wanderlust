@@ -129,7 +129,7 @@ footer {
 
 /* show page ***********/
 
-.show-img {
+/* .show-img {
   height: 30vh;
 }
 
@@ -145,7 +145,59 @@ footer {
   align-items: center !important;
   gap: 2rem;
   width: auto !important;
+} */
+ .show-img {
+  border-radius: 15px;
+  height: 400px;
+  object-fit: cover;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
+.show-title h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.meta-info {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.meta-info span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-info i {
+  color: #fe434d;
+}
+
+.price-tag {
+  font-size: 1.6rem;
+  color: #FF385C;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.show-btns a, .show-btns button {
+  margin-right: 0.6rem;
+  width: auto;
+  min-width: 5rem;
+}
+
+.review-card {
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
 
 .navbar-collapse {
   background-color: white !important;
