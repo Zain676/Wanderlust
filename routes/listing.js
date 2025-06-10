@@ -46,25 +46,5 @@ router.get(
   wrapAsync(listingController.renderEditForm)
 );
 
-router.get("/api/listings", async (req, res) => {
-  const { category, search } = req.query;
-
-  const filter = {};
-  if (category) {
-    filter.category = category;
-  }
-  if (search) {
-    filter.title = { $regex: search, $options: "i" };
-  }
-
-  try {
-    const listings = await Listing.find(filter);
-    res.json(listings);
-  } catch (err) {
-    console.error("Error fetching filtered listings:", err);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 
 module.exports = router;
