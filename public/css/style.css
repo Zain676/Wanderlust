@@ -174,8 +174,8 @@ footer {
 
 @media (max-width: 992px) {
   .show {
-    width: 100% !important;
-    margin: 0 0 0 0 !important;
+    width: 95% !important;
+    margin: 0 0 0 2rem !important;
   }
   .show-title {
     width: 95% !important;
