@@ -1,15 +1,14 @@
 body {
-    font-family: "Plus Jakarta Sans", serif !important;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  font-family: "Plus Jakarta Sans", serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* container */
 .container {
-    flex: 1;
+  flex: 1;
 }
-
 
 /* Navbar */
 
@@ -20,79 +19,78 @@ body {
 }
 
 .fa-compass {
-    color: #fe434d;
-    font-size: 2rem;
+  color: #fe434d;
+  font-size: 2rem;
 }
 
 .nav-link {
-    color: #222222 !important;
+  color: #222222 !important;
 }
-
 
 /* Footer */
 
 footer {
-    background-color: #ebebeb;
-    padding: 20px;
-    text-align: center;
-    margin-top: auto; 
+  background-color: #ebebeb;
+  padding: 20px;
+  text-align: center;
+  margin-top: auto;
 }
 
 .f-info-links a {
-    text-decoration: none;
-    color: #222222;
+  text-decoration: none;
+  color: #222222;
 }
 
 .f-info-links a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .f-info {
-    display: flex;
-    height: 8rem;
-    background-color: #ebebeb;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
-    margin-top: auto;
+  display: flex;
+  height: 8rem;
+  background-color: #ebebeb;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  margin-top: auto;
 }
 
-.f-info-links, .f-info-socials {
-    width: 100%;
+.f-info-links,
+.f-info-socials {
+  width: 100%;
 }
 
 .f-info-socials i {
-    font-size: 1.2rem;
-    margin-right: 1rem;
+  font-size: 1.2rem;
+  margin-right: 1rem;
 }
 
 /* Cards */
 
 .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .listing-card {
-    border: none !important;
-    /* width: 20rem !important; */
-} 
+  border: none !important;
+  /* width: 20rem !important; */
+}
 .card-img-top {
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover !important;
-    height: 17rem !important;
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  height: 17rem !important;
 }
 
 .card-body {
-    padding: 0% !important;
-    
+  padding: 0% !important;
 }
 
 .card-text p {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 /* .card-text {
@@ -100,54 +98,82 @@ footer {
 } */
 
 .listing-link {
-    text-decoration: none;
-    color: #222222;
+  text-decoration: none;
+  color: #222222;
 }
 
 /* Card Effect  */
 .card:hover {
-    color: black;
+  color: black;
 }
 .card-img-overlay {
-    opacity: 0;
+  opacity: 0;
 }
 .card-img-overlay:hover {
-    opacity: 0.2;
-    background-color: white;
+  opacity: 0.2;
+  background-color: white;
 }
 
 /* New page ***********/
 
 .add-btn {
-    background-color: #fe434d !important;
-    border: none !important;
+  background-color: #fe434d !important;
+  border: none !important;
 }
 
 /* Edit page ***********/
 
 .edit-btn {
-    background-color: #fe434d !important;
-    border: none !important;
+  background-color: #fe434d !important;
+  border: none !important;
 }
 
 /* show page ***********/
 
 .show-img {
-    height: 30vh;
+  height: 30vh;
 }
 
-
 .del-btn {
-    background-color: #fe434d !important;
-    border: none !important;
+  background-color: #fe434d !important;
+  border: none !important;
 }
 
 .btns {
-    margin-top: 2rem !important;
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    gap: 2rem;
-    width: auto !important;
+  margin-top: 2rem !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 2rem;
+  width: auto !important;
+}
 
+.navbar-collapse {
+  background-color: white !important;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .search-bar form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar input,
+  .search-bar button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .navbar-nav {
+    text-align: center;
+  }
+  .navbar-collapse {
+    margin-top: 10px;
+  }
+  .navbar-nav .nav-link {
+    padding: 0.5rem 0;
+  }
 }

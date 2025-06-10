@@ -19,7 +19,8 @@
     }
 </style>
 
-<nav class="navbar navbar-expand-md bg-body-light mb-3 sticky-top">
+<nav class="navbar navbar-expand-md mb-3 sticky-top shadow" style="background-color: white;">
+
     <div class="container-fluid">
         <a class="navbar-brand" href="/listings"><i
                 class="fa-regular fa-compass"></i></a>
@@ -27,12 +28,12 @@
             data-bs-target="#navbarNavAltMarkup">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse flex-column flex-md-row" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/listings">Explore</a>
             </div>
 
-            <div class="navbar-nav ms-auto search-bar">
+            <div class="navbar-nav mt-2 mt-md-0 ms-md-auto search-bar">
                 <form class="d-flex" id="searchForm">
                     <input class="form-control me-2 search-input" type="search"
                         placeholder="Search destinations" id="searchInput">
@@ -43,7 +44,7 @@
 
             </div>
 
-            <div class="navbar-nav ms-auto">
+            <div class="navbar-nav mt-2 mt-md-0 ms-md-auto">
                 <a class="nav-link" href="/listings/new">Create Listing</a>
                 <% if(!currUser) { %>
                 <a class="nav-link" href="/signup"><b>Sign up</b></a>
