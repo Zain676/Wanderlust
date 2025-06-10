@@ -27,7 +27,9 @@
 const filtersContainer = document.getElementById("filters");
 const scrollLeftBtn = document.getElementById("scrollLeft");
 const scrollRightBtn = document.getElementById("scrollRight");
-const filterItems = document.querySelectorAll("#filters .filter"); // 👈 All filter buttons
+const filterItems = document.querySelectorAll("#filters .filter");
+
+if (scrollLeftBtn && scrollRightBtn && filtersContainer) {
 
 scrollLeftBtn.addEventListener("click", () => {
   filtersContainer.scrollBy({ left: -200, behavior: "smooth" });
@@ -36,7 +38,10 @@ scrollLeftBtn.addEventListener("click", () => {
 scrollRightBtn.addEventListener("click", () => {
   filtersContainer.scrollBy({ left: 200, behavior: "smooth" });
 });
+}
 
+
+if (filterItems.length > 0) {
 filterItems.forEach((filter) => {
   filter.addEventListener("click", () => {
     // Remove active from all filters
@@ -50,6 +55,7 @@ filterItems.forEach((filter) => {
     filterListingsByCategory(selectedCategory);
   });
 });
+}
 
 function filterListingsByCategory(category) {
   const listings = document.querySelectorAll(".listing"); // Your listing cards
