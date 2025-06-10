@@ -1,0 +1,155 @@
+<% layout("/layouts/biolerplate") %>
+<body>
+  <div class="row mt-4">
+    <div class="col-8 offset-2">
+      <h3>Edit your listings</h3>
+      <form
+        method="post"
+        action="/listings/<%= listing._id %>?_method=PUT"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            name="listing[title]"
+            value="<%= listing.title %>"
+            class="form-control"
+            required />
+          <div class="invalid-feedback">Title should be valid</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            name="listing[description]"
+            id="description"
+            class="form-control"
+            required>
+<%= listing.description %></textarea>
+          <div class="invalid-feedback">Please enter a short description</div>
+        </div>
+
+        <div class="mb-3">
+          <p>Original Listing Image</p>
+          <img src="<%= originalImageUrl %>" alt="listing_image" />
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload New Image</label>
+          <input type="file" name="listing[image]" class="form-control" />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="number"
+              name="listing[price]"
+              value="<%= listing.price %>"
+              class="form-control"
+              required />
+            <div class="invalid-feedback">Price should be valid</div>
+          </div>
+
+          <div class="mb-3 col-md-8">
+            <label for="city" class="form-label">City</label>
+            <input
+              type="text"
+              name="listing[city]"
+              value="<%= listing.city %>"
+              class="form-control"
+              required />
+            <div class="invalid-feedback">City should be valid</div>
+          </div>
+          <input
+            type="hidden"
+            name="listing[coordinates][lat]"
+            value="<%= listing.coordinates.lat %>" />
+          <input
+            type="hidden"
+            name="listing[coordinates][lng]"
+            value="<%= listing.coordinates.lng %>" />
+        </div>
+
+        <div class="mb-3">
+          <label for="country" class="form-label">Country</label>
+          <input
+            type="text"
+            name="listing[country]"
+            value="<%= listing.country %>"
+            class="form-control"
+            required />
+          <div class="invalid-feedback">Country name should be valid</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select class="form-select" id="category" name="listing[category]" value="<%= listing.category %>"
+            required>
+            <option value>Choose a category</option>
+            <option value="Budget">Budget</option>
+            <option value="Luxury">Luxury</option>
+            <option value="Family">Family</option>
+            <option value="Pet Friendly">Pet Friendly</option>
+            <option value="Beachside">Beachside</option>
+            <option value="Mountain">Mountain</option>
+            <option value="Private Room">Private Room</option>
+            <option value="Entire Home">Entire Home</option>
+            <option value="With Pool">With Pool</option>
+            <option value="Free Parking">Free Parking</option>
+            <option value="WiFi">WiFi</option>
+            <option value="City Center">City Center</option>
+            <option value="Quiet Area">Quiet Area</option>
+            <option value="Couples">Couples</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Nature Stay">Nature Stay</option>
+            <option value="Unique Stays">Unique Stays</option>
+          </select>
+          <div class="invalid-feedback">Please select a category</div>
+        </div>
+
+        <button class="btn btn-dark edit-btn mt-3 mb-3">Edit</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+<!-- 
+<form action="/listings" method="post">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="listing[title]" placeholder="Catchy title"> 
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" class="form-control" id="description" placeholder="Describe the unique features of your property or experience"></textarea>
+    </div>
+    
+    <div class="mb-3">
+        <label for="image" class="form-label">Image Link</label>
+        <input type="text" class="form-control" id="image" name="listing[image]" placeholder="Provide a URL for your image"> 
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="listing[price]" placeholder="Set the price per night"> 
+        </div>
+
+        <div class="mb-3 col-md-8">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="listing[location]" placeholder="Where is your property located?"> 
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input type="text" class="form-control" id="country" name="listing[country]" placeholder="Enter the name of the country"> 
+    </div>
+
+    <button class="btn btn-dark add-btn">Add</button>
+    <br><br>
+</form> -->
