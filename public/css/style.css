@@ -152,7 +152,6 @@ footer {
   background-color: white !important;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -175,5 +174,9 @@ footer {
   }
   .navbar-nav .nav-link {
     padding: 0.5rem 0;
+  }
+  .login-form {
+    margin: auto !important;
+    width: 100% !important;
   }
 }
