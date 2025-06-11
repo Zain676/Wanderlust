@@ -25,19 +25,6 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
   try {
-    console.log('Production Debug - File Received:', req.file); // Add this line
-    
-    if (!req.file) {
-      throw new Error('No image file uploaded');
-    }
-
-    // Verify Cloudinary connection
-    await cloudinary.api.ping()
-      .then(console.log('Cloudinary connection verified'))
-      .catch(err => {
-        console.error('Cloudinary connection failed:', err);
-        throw new Error('Image service unavailable');
-      });
 
     if (!req.body.listing.city || !req.file) {
       req.flash('error', 'City and image are required');
@@ -75,27 +62,15 @@ module.exports.createListing = async (req, res, next) => {
     res.redirect("/listings");
 
 } catch (err) {
-    console.error('PRODUCTION ERROR DETAILS:', {
-      error: err.stack,
-      env: {
-        NODE_ENV: process.env.NODE_ENV,
-        CLOUD_NAME: process.env.CLOUD_NAME ? 'set' : 'missing',
-        FILE: req.file ? 'received' : 'missing'
-      },
-      system: {
-        memory: process.memoryUsage(),
-        uptime: process.uptime()
-      }
-    });
-    
-    req.flash('error', 
-      err.message.includes('Cloudinary') 
-        ? 'Image upload service error. Please try another image.'
-        : 'Creation failed. Please check all fields.'
-    );
-    return res.redirect('/listings/new');
+  if (err.name === "ValidationError") {
+    req.flash("error", "Please select a valid category.");
+    return res.redirect("/listings/new");
   }
+  next(err);
+}
+
 };
+
 
 module.exports.renderEditForm = async (req, res) => {
   let { id } = req.params;
