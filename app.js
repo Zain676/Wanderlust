@@ -34,18 +34,6 @@ main()
     await mongoose.connect(dbUrl);
   }
 
-// In your main app file
-mongoose.connection.on('error', err => {
-  console.error('DB connection error:', err);
-});
-
-// Ping DB periodically
-setInterval(() => {
-  mongoose.connection.db.admin().ping((err, result) => {
-    if (err) console.error('DB ping failed:', err);
-  });
-}, 60000); // Every minute
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
