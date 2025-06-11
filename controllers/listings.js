@@ -27,6 +27,7 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
+  console.log("req file", req.file);
   try {
     if (!req.body.listing.city || !req.file) {
       req.flash("error", "Image upload failed. Please try another file.");
