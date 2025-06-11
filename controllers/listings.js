@@ -74,6 +74,8 @@ module.exports.createListing = async (req, res, next) => {
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
   } catch (err) {
+    console.error('Legacy Upload Error:', err);
+    req.flash('error', 'Upload failed. Try a smaller image (<5MB)');
     if (err.name === "ValidationError") {
       req.flash("error", "Please select a valid category.");
       return res.redirect("/listings/new");
