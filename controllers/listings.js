@@ -25,50 +25,42 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
   try {
-
-    if (!req.body.listing.city || !req.file) {
-      req.flash('error', 'City and image are required');
-      return res.redirect('/listings/new');
+    console.log('Production Debug - File Received:', req.file); // Add this line
+    
+    if (!req.file) {
+      throw new Error('No image file uploaded');
     }
 
-    // Geocode address to get coordinates
-    const geoResponse = await axios.get(
-      `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(req.body.listing.city)}.json?key=${TOMTOM_API_KEY}`
-    );
+    // Verify Cloudinary connection
+    await cloudinary.api.ping()
+      .then(console.log('Cloudinary connection verified'))
+      .catch(err => {
+        console.error('Cloudinary connection failed:', err);
+        throw new Error('Image service unavailable');
+      });
 
-    const results = geoResponse.data.results;
-
-    // Handle invalid or unfound locations
-    if (!results || results.length === 0 || !results[0].position) {
-      req.flash('error', 'City not found. Please enter a valid location.');
-      return res.redirect('/listings/new');
-    }
-
-    // extract the data from geoResponse.data.results
-    const { lat, lon: lng } = results[0].position;
-
-    let url = req.file?.path || '';
-    let filename = req.file?.filename || '';
-
-    const newListing = new Listing({
-      ...req.body.listing,
-      coordinates: { lat, lng },
-      owner: req.user._id,
-      image: { url, filename }
+    // Rest of your existing code...
+    
+  } catch (err) {
+    console.error('PRODUCTION ERROR DETAILS:', {
+      error: err.stack,
+      env: {
+        NODE_ENV: process.env.NODE_ENV,
+        CLOUD_NAME: process.env.CLOUD_NAME ? 'set' : 'missing',
+        FILE: req.file ? 'received' : 'missing'
+      },
+      system: {
+        memory: process.memoryUsage(),
+        uptime: process.uptime()
+      }
     });
-
-    await newListing.save();
-    req.flash("success", "New Listing Created");
-    res.redirect("/listings");
-
-} catch (err) {
-    console.error('Creation error:', err);
+    
     req.flash('error', 
-      err.name === 'ValidationError' 
-        ? Object.values(err.errors).map(e => e.message).join(', ')
-        : 'Failed to create listing. Please try again.'
+      err.message.includes('Cloudinary') 
+        ? 'Image upload service error. Please try another image.'
+        : 'Creation failed. Please check all fields.'
     );
-    res.redirect('/listings/new');
+    return res.redirect('/listings/new');
   }
 };
 
