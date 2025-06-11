@@ -75,13 +75,25 @@ module.exports.createListing = async (req, res, next) => {
     res.redirect("/listings");
 
 } catch (err) {
-    console.error('Creation error:', err);
+    console.error('PRODUCTION ERROR DETAILS:', {
+      error: err.stack,
+      env: {
+        NODE_ENV: process.env.NODE_ENV,
+        CLOUD_NAME: process.env.CLOUD_NAME ? 'set' : 'missing',
+        FILE: req.file ? 'received' : 'missing'
+      },
+      system: {
+        memory: process.memoryUsage(),
+        uptime: process.uptime()
+      }
+    });
+    
     req.flash('error', 
-      err.name === 'ValidationError' 
-        ? Object.values(err.errors).map(e => e.message).join(', ')
-        : 'Failed to create listing. Please try again.'
+      err.message.includes('Cloudinary') 
+        ? 'Image upload service error. Please try another image.'
+        : 'Creation failed. Please check all fields.'
     );
-    res.redirect('/listings/new');
+    return res.redirect('/listings/new');
   }
 };
 
