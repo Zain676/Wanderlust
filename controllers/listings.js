@@ -1,6 +1,9 @@
 const Listing = require("../models/listing");
-const axios = require('axios');
+const axios = require("axios");
 const TOMTOM_API_KEY = process.env.TOMTOM_API_KEY;
+
+const { cloudinary } = require("../cloudConfig");
+const legacyUpload = require("../utils/legacyUploader");
 
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
@@ -20,57 +23,64 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing does not exist");
     return res.redirect("/listings");
   }
-  res.render("listings/show.ejs", { listing, apiKey: process.env.TOMTOM_API_KEY });
+  res.render("listings/show.ejs", {
+    listing,
+    apiKey: process.env.TOMTOM_API_KEY,
+  });
 };
 
 module.exports.createListing = async (req, res, next) => {
   try {
+    const tempPath = `./tmp/${Date.now()}-${req.file.originalname}`;
+    require("fs").writeFileSync(tempPath, req.file.buffer);
+
+    // 2. Use legacy upload method
+    const uploadResult = await legacyUpload(tempPath);
 
     if (!req.body.listing.city || !req.file) {
-      req.flash('error', 'City and image are required');
-      return res.redirect('/listings/new');
+      req.flash("error", "City and image are required");
+      return res.redirect("/listings/new");
     }
 
     // Geocode address to get coordinates
     const geoResponse = await axios.get(
-      `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(req.body.listing.city)}.json?key=${TOMTOM_API_KEY}`
+      `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
+        req.body.listing.city
+      )}.json?key=${TOMTOM_API_KEY}`
     );
 
     const results = geoResponse.data.results;
 
     // Handle invalid or unfound locations
     if (!results || results.length === 0 || !results[0].position) {
-      req.flash('error', 'City not found. Please enter a valid location.');
-      return res.redirect('/listings/new');
+      req.flash("error", "City not found. Please enter a valid location.");
+      return res.redirect("/listings/new");
     }
 
     // extract the data from geoResponse.data.results
     const { lat, lon: lng } = results[0].position;
 
-    let url = req.file?.path || '';
-    let filename = req.file?.filename || '';
+    let url = req.file?.path || "";
+    let filename = req.file?.filename || "";
 
     const newListing = new Listing({
       ...req.body.listing,
       coordinates: { lat, lng },
       owner: req.user._id,
-      image: { url, filename }
+      image: { url, filename },
     });
 
     await newListing.save();
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
-
-} catch (err) {
-  if (err.name === "ValidationError") {
-    req.flash("error", "Please select a valid category.");
-    return res.redirect("/listings/new");
+  } catch (err) {
+    if (err.name === "ValidationError") {
+      req.flash("error", "Please select a valid category.");
+      return res.redirect("/listings/new");
+    }
+    next(err);
   }
-  next(err);
-}
-
 };
-
 
 module.exports.renderEditForm = async (req, res) => {
   let { id } = req.params;
@@ -88,22 +98,25 @@ module.exports.updateListing = async (req, res, next) => {
   try {
     let { id } = req.params;
     const existingListing = await Listing.findById(id);
-    
+
     // 1. Handle geocoding if city changed
-    if (req.body.listing.city && req.body.listing.city !== existingListing.city) {
+    if (
+      req.body.listing.city &&
+      req.body.listing.city !== existingListing.city
+    ) {
       const geoResponse = await axios.get(
-        `https://api.tomtom.com/search/2/geocode/${
-          encodeURIComponent(req.body.listing.city)
-        }.json?key=${TOMTOM_API_KEY}`
+        `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
+          req.body.listing.city
+        )}.json?key=${TOMTOM_API_KEY}`
       );
-      
+
       if (!geoResponse.data.results || geoResponse.data.results.length === 0) {
-        throw new Error('Invalid location');
+        throw new Error("Invalid location");
       }
-      
+
       req.body.listing.coordinates = {
         lat: geoResponse.data.results[0].position.lat,
-        lng: geoResponse.data.results[0].position.lon
+        lng: geoResponse.data.results[0].position.lon,
       };
     } else {
       // Preserve existing coordinates if city didn't change
@@ -120,7 +133,7 @@ module.exports.updateListing = async (req, res, next) => {
     if (req.file) {
       updateData.image = {
         url: req.file.path,
-        filename: req.file.filename
+        filename: req.file.filename,
       };
     }
 
@@ -130,8 +143,8 @@ module.exports.updateListing = async (req, res, next) => {
     req.flash("success", "Listing Updated");
     res.redirect(`/listings/${id}`);
   } catch (err) {
-    if (err.message === 'Invalid location') {
-      req.flash('error', 'Could not find coordinates for the specified city');
+    if (err.message === "Invalid location") {
+      req.flash("error", "Could not find coordinates for the specified city");
       return res.redirect(`/listings/${id}/edit`);
     }
     next(err);
