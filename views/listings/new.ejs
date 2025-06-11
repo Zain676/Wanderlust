@@ -5,7 +5,7 @@
       <h3 class="mb-4">Create a New Listing</h3>
       <form
         action="/listings"
-        method="post"
+        method="POST"
         class="needs-validation"
         enctype="multipart/form-data"
         novalidate
@@ -43,6 +43,7 @@
             id="image"
             name="listing[image]"
             required
+            accept=".png,.jpg,.jpeg"
           />
         </div>
 

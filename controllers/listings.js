@@ -2,9 +2,6 @@ const Listing = require("../models/listing");
 const axios = require("axios");
 const TOMTOM_API_KEY = process.env.TOMTOM_API_KEY;
 
-const { cloudinary } = require("../cloudConfig");
-const legacyUpload = require("../utils/legacyUploader");
-
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
   res.render("listings/index.ejs", { allListings });
@@ -31,14 +28,14 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
   try {
-    const tempPath = `./tmp/${Date.now()}-${req.file.originalname}`;
-    require("fs").writeFileSync(tempPath, req.file.buffer);
-
-    // 2. Use legacy upload method
-    const uploadResult = await legacyUpload(tempPath);
-
     if (!req.body.listing.city || !req.file) {
-      req.flash("error", "City and image are required");
+      req.flash("error", "Image upload failed. Please try another file.");
+      return res.redirect("/listings/new");
+    }
+
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedMimeTypes.includes(req.file.mimetype)) {
+      req.flash("error", "Only JPEG and PNG images are allowed.");
       return res.redirect("/listings/new");
     }
 
@@ -74,8 +71,8 @@ module.exports.createListing = async (req, res, next) => {
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
   } catch (err) {
-    console.error('Legacy Upload Error:', err);
-    req.flash('error', 'Upload failed. Try a smaller image (<5MB)');
+    console.error("Legacy Upload Error:", err);
+    req.flash("error", "Upload failed. Try a smaller image (<5MB)");
     if (err.name === "ValidationError") {
       req.flash("error", "Please select a valid category.");
       return res.redirect("/listings/new");
