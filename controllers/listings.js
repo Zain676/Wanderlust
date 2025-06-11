@@ -25,6 +25,12 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
   try {
+
+    if (!req.body.listing.city || !req.file) {
+      req.flash('error', 'City and image are required');
+      return res.redirect('/listings/new');
+    }
+
     // Geocode address to get coordinates
     const geoResponse = await axios.get(
       `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(req.body.listing.city)}.json?key=${TOMTOM_API_KEY}`
@@ -56,15 +62,15 @@ module.exports.createListing = async (req, res, next) => {
     res.redirect("/listings");
 
 } catch (err) {
-  if (err.name === "ValidationError") {
-    req.flash("error", "Please select a valid category.");
-    return res.redirect("/listings/new");
+    console.error('Creation error:', err);
+    req.flash('error', 
+      err.name === 'ValidationError' 
+        ? Object.values(err.errors).map(e => e.message).join(', ')
+        : 'Failed to create listing. Please try again.'
+    );
+    res.redirect('/listings/new');
   }
-  next(err);
-}
-
 };
-
 
 module.exports.renderEditForm = async (req, res) => {
   let { id } = req.params;
