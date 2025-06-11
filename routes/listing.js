@@ -8,7 +8,7 @@ const listingController = require("../controllers/listings.js");
 const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
-const bufferUpload = require('../middleware/bufferUpload');
+const bufferUpload = require('../bufferUpload.js');
 
 router.post('/', 
   bufferUpload.single('listing[image]'),
