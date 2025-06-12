@@ -27,7 +27,6 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
-  console.log("req file", req.file);
   try {
     const geoResponse = await axios.get(
       `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
