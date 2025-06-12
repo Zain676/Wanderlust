@@ -14,7 +14,6 @@ router
   .get(wrapAsync(listingController.index))
   .post(
     isLoggedIn,
-    // validateListing,
     upload.single("listing[image]"),
     wrapAsync(listingController.createListing)
     
@@ -23,7 +22,6 @@ router
 // New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-// Filter Listings by Category (for AJAX)
 router.get("/category/:category", wrapAsync(listingController.filterByCategory));
 
 router

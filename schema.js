@@ -12,25 +12,27 @@ module.exports.listingSchema = Joi.object({
       lat: Joi.number().required(),
       lng: Joi.number().required(),
     }).required(),
-    category: Joi.string().valid( // Add this validation
-      "Budget",
-      "Luxury",
-      "Family",
-      "Pet Friendly",
-      "Beachside",
-      "Mountain",
-      "Private Room",
-      "Entire Home",
-      "With Pool",
-      "Free Parking",
-      "WiFi",
-      "City Center",
-      "Quiet Area",
-      "Couples",
-      "Adventure",
-      "Nature Stay",
-      "Unique Stays"
-    ).required(),
+    category: Joi.string()
+      .valid(
+        "Budget",
+        "Luxury",
+        "Family",
+        "Pet Friendly",
+        "Beachside",
+        "Mountain",
+        "Private Room",
+        "Entire Home",
+        "With Pool",
+        "Free Parking",
+        "WiFi",
+        "City Center",
+        "Quiet Area",
+        "Couples",
+        "Adventure",
+        "Nature Stay",
+        "Unique Stays"
+      )
+      .required(),
   }).required(),
 });
 

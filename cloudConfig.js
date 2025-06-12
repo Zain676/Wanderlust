@@ -19,11 +19,10 @@ console.log("Cloudinary Config:");
 console.log({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET ? "loaded" : "missing"
+  api_secret: process.env.CLOUD_API_SECRET ? "loaded" : "missing",
 });
 
-
 module.exports = {
-    cloudinary,
-    storage,
-}
+  cloudinary,
+  storage,
+};

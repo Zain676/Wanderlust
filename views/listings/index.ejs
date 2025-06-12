@@ -1,178 +1,174 @@
 <% layout("/layouts/biolerplate") %>
-<body>
-    <style>
-    .filter-scroll-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      overflow: hidden;
-    }
 
-    .filters {
-      display: flex;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: none; /* Firefox */
-    }
+    <body>
+        <style>
+            .filter-scroll-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                overflow: hidden;
+            }
 
-    .filters::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
-    }
+            .filters {
+                display: flex;
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                scrollbar-width: none;
+            }
 
-    .filter {
-      flex: 0 0 auto;
-      text-align: center;
-      margin: 0 1rem;
-      opacity: 0.7;
-      cursor: pointer;
-    }
+            .filters::-webkit-scrollbar {
+                display: none;
+            }
 
-    .filter:hover {
-      opacity: 1;
-    }
+            .filter {
+                flex: 0 0 auto;
+                text-align: center;
+                margin: 0 1rem;
+                opacity: 0.7;
+                cursor: pointer;
+            }
 
-    .filter p {
-      font-size: 0.8rem;
-    }
+            .filter:hover {
+                opacity: 1;
+            }
 
-    .scroll-btn {
-      background-color: white;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0 0.5rem;
-      z-index: 1;
-    }
+            .filter p {
+                font-size: 0.8rem;
+            }
 
-    #scrollLeft {
-      margin-right: -1rem;
-    }
+            .scroll-btn {
+                background-color: white;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0 0.5rem;
+                z-index: 1;
+            }
 
-    #scrollRight {
-      margin-left: -1rem;
-    }
-    .filter.active {
-      border-bottom: 2px solid #ff385c;
-      opacity: 1;
-    }
+            #scrollLeft {
+                margin-right: -1rem;
+            }
 
-    @media (max-width: 768px) {
-      .filter {
-        margin: 0 0.6rem;
-      }
-    }
-  </style>
+            #scrollRight {
+                margin-left: -1rem;
+            }
 
-    <div class="filter-scroll-container">
-        <button id="scrollLeft" class="scroll-btn">
-            <i class="fa-solid fa-angle-left"></i>
-        </button>
+            .filter.active {
+                border-bottom: 2px solid #ff385c;
+                opacity: 1;
+            }
 
-        <div class="filters" id="filters">
-            <div class="filter category-btn" data-category="Budget">
-                <i class="fa-solid fa-wallet"></i>
-                <p>Budget</p>
-            </div>
-            <div class="filter category-btn" data-category="Luxury">
-                <i class="fa-solid fa-gem"></i>
-                <p>Luxury</p>
-            </div>
-            <div class="filter category-btn" data-category="Family">
-                <i class="fa-solid fa-people-roof"></i>
-                <p>Family</p>
-            </div>
-            <div class="filter category-btn" data-category="Pet Friendly">
-                <i class="fa-solid fa-dog"></i>
-                <p>Pet Friendly</p>
-            </div>
-            <div class="filter category-btn" data-category="Beachside">
-                <i class="fa-solid fa-umbrella-beach"></i>
-                <p>Beachside</p>
-            </div>
-            <div class="filter category-btn" data-category="Mountain">
-                <i class="fa-solid fa-mountain"></i>
-                <p>Mountain</p>
-            </div>
-            <div class="filter category-btn" data-category="Private Room">
-                <i class="fa-solid fa-door-open"></i>
-                <p>Private Room</p>
-            </div>
-            <div class="filter category-btn" data-category="Entire Home">
-                <i class="fa-solid fa-house-user"></i>
-                <p>Entire Home</p>
-            </div>
-            <div class="filter category-btn" data-category="With Pool">
-                <i class="fa-solid fa-water-ladder"></i>
-                <p>With Pool</p>
-            </div>
-            <div class="filter category-btn" data-category="Free Parking">
-                <i class="fa-solid fa-square-parking"></i>
-                <p>Free Parking</p>
-            </div>
-            <div class="filter category-btn" data-category="WiFi">
-                <i class="fa-solid fa-wifi"></i>
-                <p>WiFi</p>
-            </div>
-            <div class="filter category-btn" data-category="City Center">
-                <i class="fa-solid fa-city"></i>
-                <p>City Center</p>
-            </div>
-            <div class="filter category-btn" data-category="Quiet Area">
-                <i class="fa-solid fa-bed"></i>
-                <p>Quiet Area</p>
-            </div>
-            <div class="filter category-btn" data-category="Couples">
-                <i class="fa-solid fa-heart"></i>
-                <p>Couples</p>
-            </div>
-            <div class="filter category-btn" data-category="Adventure">
-                <i class="fa-solid fa-person-hiking"></i>
-                <p>Adventure</p>
-            </div>
-            <div class="filter category-btn" data-category="Nature Stay">
-                <i class="fa-solid fa-tree"></i>
-                <p>Nature Stay</p>
-            </div>
-            <div class="filter category-btn" data-category="Unique Stays">
-                <i class="fa-solid fa-star"></i>
-                <p>Unique Stays</p>
-            </div>
-        </div>
+            @media (max-width: 768px) {
+                .filter {
+                    margin: 0 0.6rem;
+                }
+            }
+        </style>
 
-        <button id="scrollRight" class="scroll-btn">
-            <i class="fa-solid fa-angle-right"></i>
-        </button>
-    </div>
+        <div class="filter-scroll-container">
+            <button id="scrollLeft" class="scroll-btn">
+                <i class="fa-solid fa-angle-left"></i>
+            </button>
 
-    <div
-        id="listings-container"
-        class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
-        <% for(let listing of allListings) { %>
-        <a
-            href="/listings/<%= listing._id %>"
-            class="listing-link"
-            data-category="<%= listing.category %>">
-            <div class="card mt-4 listing-card">
-                <img
-                    src="<%= listing.image.url %>"
-                    class="card-img-top"
-                    alt="listing_image" />
-                <div class="card-img-overlay"></div>
-                <div class="card-body mt-3">
-                    <p class="card-text mb-4">
-                        <b><%= listing.title %></b> <br />
-                        &#8360; <%= listing.price.toLocaleString("en-PK") %> /
-                        night
-                        <!-- <i class="tax-info">&nbsp; &nbsp; +18% Tax</i> -->
-                    </p>
+            <div class="filters" id="filters">
+                <div class="filter category-btn" data-category="Budget">
+                    <i class="fa-solid fa-wallet"></i>
+                    <p>Budget</p>
+                </div>
+                <div class="filter category-btn" data-category="Luxury">
+                    <i class="fa-solid fa-gem"></i>
+                    <p>Luxury</p>
+                </div>
+                <div class="filter category-btn" data-category="Family">
+                    <i class="fa-solid fa-people-roof"></i>
+                    <p>Family</p>
+                </div>
+                <div class="filter category-btn" data-category="Pet Friendly">
+                    <i class="fa-solid fa-dog"></i>
+                    <p>Pet Friendly</p>
+                </div>
+                <div class="filter category-btn" data-category="Beachside">
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                    <p>Beachside</p>
+                </div>
+                <div class="filter category-btn" data-category="Mountain">
+                    <i class="fa-solid fa-mountain"></i>
+                    <p>Mountain</p>
+                </div>
+                <div class="filter category-btn" data-category="Private Room">
+                    <i class="fa-solid fa-door-open"></i>
+                    <p>Private Room</p>
+                </div>
+                <div class="filter category-btn" data-category="Entire Home">
+                    <i class="fa-solid fa-house-user"></i>
+                    <p>Entire Home</p>
+                </div>
+                <div class="filter category-btn" data-category="With Pool">
+                    <i class="fa-solid fa-water-ladder"></i>
+                    <p>With Pool</p>
+                </div>
+                <div class="filter category-btn" data-category="Free Parking">
+                    <i class="fa-solid fa-square-parking"></i>
+                    <p>Free Parking</p>
+                </div>
+                <div class="filter category-btn" data-category="WiFi">
+                    <i class="fa-solid fa-wifi"></i>
+                    <p>WiFi</p>
+                </div>
+                <div class="filter category-btn" data-category="City Center">
+                    <i class="fa-solid fa-city"></i>
+                    <p>City Center</p>
+                </div>
+                <div class="filter category-btn" data-category="Quiet Area">
+                    <i class="fa-solid fa-bed"></i>
+                    <p>Quiet Area</p>
+                </div>
+                <div class="filter category-btn" data-category="Couples">
+                    <i class="fa-solid fa-heart"></i>
+                    <p>Couples</p>
+                </div>
+                <div class="filter category-btn" data-category="Adventure">
+                    <i class="fa-solid fa-person-hiking"></i>
+                    <p>Adventure</p>
+                </div>
+                <div class="filter category-btn" data-category="Nature Stay">
+                    <i class="fa-solid fa-tree"></i>
+                    <p>Nature Stay</p>
+                </div>
+                <div class="filter category-btn" data-category="Unique Stays">
+                    <i class="fa-solid fa-star"></i>
+                    <p>Unique Stays</p>
                 </div>
             </div>
-        </a>
-        <% } %>
-    </div>
-</body>
-<!-- <script>
+
+            <button id="scrollRight" class="scroll-btn">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+        </div>
+
+        <div id="listings-container" class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
+            <% for(let listing of allListings) { %>
+                <a href="/listings/<%= listing._id %>" class="listing-link" data-category="<%= listing.category %>">
+                    <div class="card mt-4 listing-card">
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" />
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body mt-3">
+                            <p class="card-text mb-4">
+                                <b>
+                                    <%= listing.title %>
+                                </b> <br />
+                                &#8360; <%= listing.price.toLocaleString("en-PK") %> /
+                                    night
+                                    <!-- <i class="tax-info">&nbsp; &nbsp; +18% Tax</i> -->
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+    </body>
+    <!-- <script>
     let taxSwitch = document.getElementById("flexSwitchCheckDefault");
 
     taxSwitch.addEventListener("click", () => {

@@ -29,18 +29,6 @@ module.exports.showListing = async (req, res) => {
 module.exports.createListing = async (req, res, next) => {
   console.log("req file", req.file);
   try {
-    if (!req.body.listing.city || !req.file) {
-      req.flash("error", "Image upload failed. Please try another file.");
-      return res.redirect("/listings/new");
-    }
-
-    const allowedMimeTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedMimeTypes.includes(req.file.mimetype)) {
-      req.flash("error", "Only JPEG and PNG images are allowed.");
-      return res.redirect("/listings/new");
-    }
-
-    // Geocode address to get coordinates
     const geoResponse = await axios.get(
       `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(
         req.body.listing.city
@@ -49,13 +37,11 @@ module.exports.createListing = async (req, res, next) => {
 
     const results = geoResponse.data.results;
 
-    // Handle invalid or unfound locations
     if (!results || results.length === 0 || !results[0].position) {
       req.flash("error", "City not found. Please enter a valid location.");
       return res.redirect("/listings/new");
     }
 
-    // extract the data from geoResponse.data.results
     const { lat, lon: lng } = results[0].position;
 
     let url = req.file?.path || "";
@@ -72,8 +58,6 @@ module.exports.createListing = async (req, res, next) => {
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
   } catch (err) {
-    console.error("Legacy Upload Error:", err);
-    req.flash("error", "Upload failed. Try a smaller image (<5MB)");
     if (err.name === "ValidationError") {
       req.flash("error", "Please select a valid category.");
       return res.redirect("/listings/new");
@@ -137,7 +121,6 @@ module.exports.updateListing = async (req, res, next) => {
       };
     }
 
-    // 4. Perform the update
     await Listing.findByIdAndUpdate(id, updateData);
 
     req.flash("success", "Listing Updated");
