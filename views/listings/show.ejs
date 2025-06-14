@@ -1,158 +1,228 @@
 <% layout("/layouts/biolerplate") %>
 
-<div class="row show mt-5">
-  <div class="col-md-10 offset-md-1">
-    <h3 class="mb-3">
-      <%= listing.title %>
-    </h3>
+  <div class="row show mt-5">
+    <div class="col-md-10 offset-md-1">
 
-    <img src="<%= listing.image.url %>" alt="Listing Image"
-      class="show-img mb-4" />
 
-    <div class="meta-info">
-      <span><i class="fa-solid fa-user"></i> Owned by
-        <b>
-          <%= listing.owner.username %>
-        </b></span>
-      <span><i class="fa-solid fa-location-dot"></i>
-        <%= listing.city %>, <%= listing.country %>
-      </span>
-      <span><i class="fa-solid fa-layer-group"></i>
-        <%= listing.category %>
-      </span>
-    </div>
-
-    <div class="price-tag">
-      &#8360; <%= listing.price.toLocaleString("en-PK") %>
-    </div>
-
-    <p class="mb-4">
-      <%= listing.description %>
-    </p>
-
-    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-    <div class="show-btns mb-4">
-      <a href="/listings/<%= listing._id %>/edit"
-        class="btn btn-outline-dark">Edit</a>
-      <form action="/listings/<%= listing._id %>?_method=DELETE" method="post"
-        style="display: inline">
-        <button class="btn btn-outline-danger">Delete</button>
-      </form>
-    </div>
-    <% } %>
-
-    <div class="col-8 mb-4 show-review">
-      <% if(currUser) { %>
-      <hr />
-      <h4>Leave a Review</h4>
-      <form action="/listings/<%= listing.id %>/reviews" method="POST"
-        novalidate class="needs-validation">
-        <div class="mb-3 mt-3">
-          <label for="rating" class="form-label">Rating</label>
-          <fieldset class="starability-slot">
-            <input type="radio" id="no-rate" class="input-no-rate"
-              name="review[rating]" value="1" checked
-              aria-label="No rating." />
-            <input type="radio" id="first-rate1" name="review[rating]"
-              value="1" />
-            <label for="first-rate1" title="Terrible">1 star</label>
-            <input type="radio" id="first-rate2" name="review[rating]"
-              value="2" />
-            <label for="first-rate2" title="Not good">2 stars</label>
-            <input type="radio" id="first-rate3" name="review[rating]"
-              value="3" />
-            <label for="first-rate3" title="Average">3 stars</label>
-            <input type="radio" id="first-rate4" name="review[rating]"
-              value="4" />
-            <label for="first-rate4" title="Very good">4 stars</label>
-            <input type="radio" id="first-rate5" name="review[rating]"
-              value="5" />
-            <label for="first-rate5" title="Amazing">5 stars</label>
-          </fieldset>
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="<%= listing.image.url %>" alt="Listing Image" class="show-img mb-4" />
+          </div>
+          <div class="carousel-item">
+            <img src="<%= listing.image.url %>" alt="Listing Image" class="show-img mb-4" />
+          </div>
+          <div class="carousel-item">
+            <img src="<%= listing.image.url %>" alt="Listing Image" class="show-img mb-4" />
+          </div>
         </div>
-        <div class="mb-3 mt-3">
-          <label for="comment" class="form-label">Comment</label>
-          <textarea name="review[comment]" id="comment" cols="30" rows="5"
-            class="form-control"
-            required></textarea>
-          <div class="invalid-feedback">Please add a comment for review</div>
-        </div>
-        <br />
-        <button class="btn btn-outline-dark">Submit</button>
-      </form>
-      <% } %>
-      <hr />
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
 
-      <% if(listing.reviews.length> 0) { %>
-      <p><b>All Reviews</b></p>
-      <div class="row">
-        <% for(review of listing.reviews) { %>
-        <div class="col-md-5 me-3 mb-4 review-card p-3">
-          <h6 class="text-muted">@<%= review.author.username %>
-          </h6>
-          <p class="starability-result" data-rating="<%= review.rating %>"></p>
-          <p>
-            <%= review.comment %>
-          </p>
-          <form
-            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-            method="post">
-            <button class="btn btn-sm btn-outline-danger">Delete</button>
+      <h3 class="mb-3">
+        <%= listing.title %>
+      </h3>
+
+
+      <div class="meta-info">
+        <span><i class="fa-solid fa-user"></i> Owned by <b>
+            <%= listing.owner.username %>
+          </b></span>
+        <span><i class="fa-solid fa-location-dot"></i>
+          <%= listing.city %>, <%= listing.country %>
+        </span>
+        <span><i class="fa-solid fa-layer-group"></i>
+          <%= listing.category %>
+        </span>
+      </div>
+
+      <div class="price-tag">&#8360; <%= listing.price.toLocaleString("en-PK") %>
+      </div>
+
+      <p class="mb-4">
+        <%= listing.description %>
+      </p>
+
+      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+        <div class="show-btns mb-4">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-dark">Edit</a>
+          <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display:inline;">
+            <button class="btn btn-outline-danger">Delete</button>
           </form>
         </div>
         <% } %>
-      </div>
 
-      <% } %>
-      
+          <div class="col-8 mb-4 show-review">
+            <% if(currUser) { %>
+              <hr />
+              <h4>Leave a Review</h4>
+              <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+                <div class="mb-3 mt-3">
+                  <label for="rating" class="form-label">Rating</label>
+                  <fieldset class="starability-slot">
+                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                      aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+                </div>
+                <div class="mb-3">
+                  <label for="comment" class="form-label">Comment</label>
+                  <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control"
+                    required></textarea>
+                  <div class="invalid-feedback">Please add a comment for review</div>
+                </div>
+                <button class="btn btn-outline-dark">Submit</button>
+              </form>
+              <% } %>
+                <hr />
+
+                <% if(listing.reviews.length> 0) { %>
+                  <p><b>All Reviews</b></p>
+                  <div class="row">
+                    <% for(review of listing.reviews) { %>
+                      <div class="col-md-5 me-3 mb-4 review-card p-3">
+                        <h6 class="text-muted">@<%= review.author.username %>
+                        </h6>
+                        <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                        <p>
+                          <%= review.comment %>
+                        </p>
+                        <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                          method="post">
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                      </div>
+                      <% } %>
+                  </div>
+
+
+                  <% } %>
+
+          </div>
+          <div class="card-text mb-3 map">
+            <h4 class="mt-5 mb-3">Where you'll be</h4>
+            <div class="map-container" data-lng="<%= listing.coordinates.lng %>"
+              data-lat="<%= listing.coordinates.lat %>" data-title="<%= listing.title %>"
+              style="width: 100%; height: 400px; position: relative"></div>
+          </div>
     </div>
-    <div class="card-text mb-3 map">
-        <h3>Where you'll be</h3>
-        <div class="map-container" data-lng="<%= listing.coordinates.lng %>"
-          data-lat="<%= listing.coordinates.lat %>"
-          data-title="<%= listing.title %>"
-          style="width: 100%; height: 400px; position: relative"></div>
-      </div>
+
   </div>
 
   <% if (listing.coordinates) { %>
-  <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          if (typeof tt === "undefined") {
-            console.error("TomTom Maps SDK not loaded");
-            document.querySelector(".map-container").innerHTML =
-              '<p class="text-muted">Map unavailable</p>';
-            return;
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof tt === "undefined") {
+          console.error("TomTom Maps SDK not loaded");
+          document.querySelector(".map-container").innerHTML = '<p class="text-muted">Map unavailable</p>';
+          return;
+        }
+
+        try {
+          const mapEl = document.querySelector(".map-container");
+          const coords = {
+            lng: parseFloat(mapEl.dataset.lng),
+            lat: parseFloat(mapEl.dataset.lat),
+          };
+
+          if (isNaN(coords.lng) || isNaN(coords.lat)) {
+            throw new Error("Invalid coordinates");
           }
 
-          try {
-            const mapEl = document.querySelector(".map-container");
-            const coords = {
-              lng: parseFloat(mapEl.dataset.lng),
-              lat: parseFloat(mapEl.dataset.lat),
-            };
+          const map = tt.map({
+            key: "<%= process.env.TOMTOM_API_KEY %>",
+            container: mapEl,
+            center: [coords.lng, coords.lat],
+            zoom: 14,
+            interactive: true,
+          });
 
-            if (isNaN(coords.lng) || isNaN(coords.lat)) {
-              throw new Error("Invalid coordinates");
+          const marker = new tt.Marker({
+            color: "#fe434d",
+            width: 35,
+            height: 35,
+          })
+            .setLngLat([coords.lng, coords.lat])
+            .addTo(map);
+
+          const popup = new tt.Popup({ offset: 25 }).setHTML(`
+        <div style="font-family: Arial, sans-serif; padding: 5px 10px;">
+          <strong style="font-size: 1.1rem; color: #fe434d;">
+            ${mapEl.dataset.title}
+          </strong>
+          <p style="margin-top: 6px; font-size: 0.85rem; color: #6c757d;">
+            <i class="bi bi-geo-alt" style="margin-right: 4px;"></i>
+            Exact location provided after booking
+          </p>
+        </div>
+      `);
+
+          marker.setPopup(popup);
+          marker.togglePopup();
+        } catch (error) {
+          console.error("Map error:", error);
+          document.querySelector(".map-container").innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
+        }
+      });
+    </script>
+    <% } %>
+
+      <% if (listing.coordinates) { %>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            if (typeof tt === "undefined") {
+              console.error("TomTom Maps SDK not loaded");
+              document.querySelector(".map-container").innerHTML =
+                '<p class="text-muted">Map unavailable</p>';
+              return;
             }
 
-            const map = tt.map({
-              key: "<%= process.env.TOMTOM_API_KEY %>",
-              container: mapEl,
-              center: [coords.lng, coords.lat],
-              zoom: 10,
-              interactive: true,
-            });
+            try {
+              const mapEl = document.querySelector(".map-container");
+              const coords = {
+                lng: parseFloat(mapEl.dataset.lng),
+                lat: parseFloat(mapEl.dataset.lat),
+              };
 
-            const marker = new tt.Marker({
-              color: "#FF385C",
-              width: 35,
-              height: 35,
-            })
-              .setLngLat([coords.lng, coords.lat])
-              .addTo(map);
+              if (isNaN(coords.lng) || isNaN(coords.lat)) {
+                throw new Error("Invalid coordinates");
+              }
 
-            const popup = new tt.Popup({ offset: 25 }).setHTML(`
+              const map = tt.map({
+                key: "<%= process.env.TOMTOM_API_KEY %>",
+                container: mapEl,
+                center: [coords.lng, coords.lat],
+                zoom: 10,
+                interactive: true,
+              });
+
+              const marker = new tt.Marker({
+                color: "#FF385C",
+                width: 35,
+                height: 35,
+              })
+                .setLngLat([coords.lng, coords.lat])
+                .addTo(map);
+
+              const popup = new tt.Popup({ offset: 25 }).setHTML(`
   <div style="font-family: Arial, sans-serif; padding: 5px 10px;">
     <strong style="font-size: 1.1rem; color: #FF385C;">
       ${mapEl.dataset.title}
@@ -164,17 +234,17 @@
   </div>
 `);
 
-            marker.setPopup(popup);
-            marker.togglePopup();
-          } catch (error) {
-            console.error("Map error:", error);
-            document.querySelector(
-              ".map-container"
-            ).innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
-          }
-          window.scrollTo(0, 0);
-        });
-      </script>
+              marker.setPopup(popup);
+              marker.togglePopup();
+            } catch (error) {
+              console.error("Map error:", error);
+              document.querySelector(
+                ".map-container"
+              ).innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
+            }
+            window.scrollTo(0, 0);
+          });
+        </script>
 
-  <% } %>
-</div>
+        <% } %>
+          </div>

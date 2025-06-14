@@ -39,6 +39,15 @@ body {
   color: #222222 !important;
 }
 
+/* Filters */
+
+#scrollLeft {
+  padding-right: 0% !important;
+}
+#scrollRight {
+  padding-left: 0% !important;
+}
+
 /* Footer */
 
 footer {
@@ -104,10 +113,6 @@ footer {
   font-weight: 400;
 }
 
-/* .card-text {
-    height: 5rem;
-} */
-
 .listing-link {
   text-decoration: none;
   color: #222222;
@@ -141,10 +146,6 @@ footer {
 
 /* show page ***********/
 
-/* .show-img {
-  height: 30vh;
-}
-
 .del-btn {
   background-color: #fe434d !important;
   border: none !important;
@@ -157,7 +158,8 @@ footer {
   align-items: center !important;
   gap: 2rem;
   width: auto !important;
-}*/
+}
+
 
  .show-img {
   border-radius: 15px;
@@ -205,11 +207,16 @@ footer {
   min-width: 5rem;
 }
 
+.show-review {
+  width: 100% !important;
+}
+
 .review-card {
   border-radius: 10px;
   border: 1px solid #dee2e6;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
+
 
 
 .navbar-collapse {
@@ -235,10 +242,53 @@ footer {
   color: #fe434d !important;
   cursor: pointer !important;
 }
+@media (max-width: 425px) {
+
+  .meta-info {
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .price-tag {
+    font-size: 1.3rem;
+  }
+
+  .review-card {
+    margin: 1rem auto;
+    width: 100%;
+  }
+
+  .map {
+    margin-top: 2rem;
+  }
+
+  .map-container {
+    height: 300px !important;
+  }
+
+  .show-btns a,
+  .show-btns button {
+    padding: 3px 0 3px 0 !important;
+    font-size: smaller;
+  }
+
+  .show-review form button {
+    padding: 0.3rem !important;
+    font-size: smaller;
+  }
+
+  textarea {
+    font-size: 0.95rem;
+  }
+
+  .starability-slot label {
+    font-size: 0.9rem;
+  }
+}
 
 
-
-@media (max-width: 992px) {
+@media (max-width: 900px) {
   .show {
     width: 95% !important;
     margin: 0 0 0 0.5rem !important;
@@ -264,7 +314,8 @@ footer {
   }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 767px) {
   .search-bar form {
     flex-direction: column;
     align-items: stretch;
@@ -310,7 +361,7 @@ footer {
     margin: auto !important;
     width: 100% !important;
   }
-    .footer-container {
+  .footer-container {
     grid-template-columns: 1fr;
   }
 
@@ -353,5 +404,3 @@ footer {
     font-size: small !important;
   }
 }
-
-
