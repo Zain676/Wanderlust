@@ -19,29 +19,25 @@
   }
 </style>
 
-<nav
-  class="navbar navbar-expand-md mb-3 sticky-top"
-  style="background-color: white"
->
+<nav class="navbar navbar-expand-md mb-3 sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"
-      ><i class="fa-regular fa-compass"></i
-    ></a>
+    <a class="navbar-brand" href="/listings">
+      <img
+        src="/logo.png"
+        alt="NobleStay Logo"
+        style="height: 4.5rem; width: auto; margin-left: 2rem;"
+        class="d-inline-block align-top" />
+    </a>
     <button
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-    >
+      data-bs-target="#navbarNavAltMarkup">
       <i class="fa-solid fa-ellipsis-vertical toggler-custom-icon"></i>
     </button>
     <div
       class="collapse navbar-collapse flex-column flex-md-row"
-      id="navbarNavAltMarkup"
-    >
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
+      id="navbarNavAltMarkup">
 
       <div class="navbar-nav mt-2 mt-md-0 ms-md-auto search-bar">
         <form class="d-flex" id="searchForm">
@@ -49,8 +45,7 @@
             class="form-control me-2 search-input"
             type="search"
             placeholder="Search destinations"
-            id="searchInput"
-          />
+            id="searchInput" />
           <button class="btn search-btn" id="searchBtn" type="submit">
             Search
           </button>
