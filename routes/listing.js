@@ -33,8 +33,8 @@ router
     isLoggedIn,
     isOwner,
     upload.fields([
-      { name: "image", maxCount: 1 },         // main image
-      { name: "images", maxCount: 4 },        // additional images
+      { name: "image", maxCount: 1 },       
+      { name: "images", maxCount: 4 },        
     ]),
     validateListing,
     wrapAsync(listingController.updateListing)

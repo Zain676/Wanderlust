@@ -1,143 +1,170 @@
 <% layout("/layouts/biolerplate") %>
-
 <div class="row show mt-5">
-  <div class="col-md-10 offset-md-1">
-
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-
-    <!-- Add the main image first -->
-    <% if (listing.image && listing.image.url) { %>
-      <div class="carousel-item active">
-        <img src="<%= listing.image.url %>" alt="Main Listing Image" class="show-img mb-4" />
-      </div>
-    <% } %>
-
-    <!-- Add other images from listing.images[] (skip duplicates) -->
-    <% listing.images.forEach(img => { %>
-      <% if (!listing.image || img.url !== listing.image.url) { %>
-        <div class="carousel-item">
-          <img src="<%= img.url %>" alt="Listing Image" class="show-img mb-4" />
-        </div>
+  <div class="col-md-10 offset-md-1 shows">
+    <!-- Responsive Image Section -->
+<div class="d-none d-md-block mb-4">
+  <div class="row gx-2" style="height: 500px;">
+    <!-- Main Image (left side) -->
+    <div class="col-md-7 h-100 pe-1">
+      <% if (listing.image && listing.image.url) { %>
+        <img src="<%= listing.image.url %>" class="img-fluid w-100 h-100 rounded-start" style="object-fit: cover;" alt="Main Image">
       <% } %>
-    <% }) %>
-
+    </div>
+    
+    <!-- Four Additional Images (right side in 2x2 grid) -->
+    <div class="col-md-5 h-100 ps-1">
+      <div class="row g-2 h-100">
+        <!-- First row of additional images -->
+        <div class="col-6 pe-1" style="height: 50%;">
+          <% if (listing.images[0] && listing.images[0].url) { %>
+            <img src="<%= listing.images[0].url %>" class="img-fluid w-100 h-100 rounded-top-end" style="object-fit: cover;" alt="Additional Image 1">
+          <% } else { %>
+            <div class="w-100 h-100 bg-light rounded-top-end"></div>
+          <% } %>
+        </div>
+        <div class="col-6 ps-1" style="height: 50%;">
+          <% if (listing.images[1] && listing.images[1].url) { %>
+            <img src="<%= listing.images[1].url %>" class="img-fluid w-100 h-100 rounded-top-end" style="object-fit: cover;" alt="Additional Image 2">
+          <% } else { %>
+            <div class="w-100 h-100 bg-light rounded-top-end"></div>
+          <% } %>
+        </div>
+        
+        <!-- Second row of additional images -->
+        <div class="col-6 pe-1" style="height: 50%;">
+          <% if (listing.images[2] && listing.images[2].url) { %>
+            <img src="<%= listing.images[2].url %>" class="img-fluid w-100 h-100 rounded-bottom-end" style="object-fit: cover;" alt="Additional Image 3">
+          <% } else { %>
+            <div class="w-100 h-100 bg-light rounded-bottom-end"></div>
+          <% } %>
+        </div>
+        <div class="col-6 ps-1" style="height: 50%;">
+          <% if (listing.images[3] && listing.images[3].url) { %>
+            <img src="<%= listing.images[3].url %>" class="img-fluid w-100 h-100 rounded-bottom-end" style="object-fit: cover;" alt="Additional Image 4">
+          <% } else { %>
+            <div class="w-100 h-100 bg-light rounded-bottom-end"></div>
+          <% } %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <% if ((listing.images.length + (listing.image ? 1 : 0)) > 1) { %>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <% if (listing.images.length > 4) { %>
+  <div class="text-end mt-2">
+    <button class="btn btn-outline-dark">Show all photos</button>
+  </div>
   <% } %>
 </div>
-
-
-
-      <h3 class="mb-3">
-        <%= listing.title %>
-      </h3>
-
-
-      <div class="meta-info">
-        <span><i class="fa-solid fa-user"></i> Owned by <b>
-            <%= listing.owner.username %>
-          </b></span>
-        <span><i class="fa-solid fa-location-dot"></i>
-          <%= listing.city %>, <%= listing.country %>
-        </span>
-        <span><i class="fa-solid fa-layer-group"></i>
-          <%= listing.category %>
-        </span>
+    <!-- Mobile Carousel -->
+    <div id="carouselImages" class="carousel slide d-md-none mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% if (listing.image && listing.image.url) { %>
+        <div class="carousel-item active">
+          <img src="<%= listing.image.url %>" class="d-block w-100" style="height: 300px; object-fit: cover;" alt="Main Image">
+        </div>
+        <% } %>
+        <% listing.images.forEach(img => { %>
+        <% if (!listing.image || img.url !== listing.image.url) { %>
+        <div class="carousel-item <%= !listing.image ? 'active' : '' %>">
+          <img src="<%= img.url %>" class="d-block w-100" style="height: 300px; object-fit: cover;" alt="Listing Image">
+        </div>
+        <% } %>
+        <% }) %>
       </div>
+      <% if ((listing.images.length + (listing.image ? 1 : 0)) > 1) { %>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselImages" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      <% } %>
+    </div>
 
-      <div class="price-tag">&#8360; <%= listing.price.toLocaleString("en-PK") %>
-      </div>
+    <h3 class="mb-3">
+      <%= listing.title %>
+    </h3>
 
-      <p class="mb-4">
-        <%= listing.description %>
-      </p>
+    <div class="meta-info">
+      <span><i class="fa-solid fa-user"></i> Owned by <b><%= listing.owner.username %></b></span>
+      <span><i class="fa-solid fa-location-dot"></i> <%= listing.city %>, <%= listing.country %></span>
+      <span><i class="fa-solid fa-layer-group"></i> <%= listing.category %></span>
+    </div>
 
-      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-        <div class="show-btns mb-4">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-dark">Edit</a>
-          <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display:inline;">
-            <button class="btn btn-outline-danger">Delete</button>
+    <div class="price-tag">&#8360; <%= listing.price.toLocaleString("en-PK") %></div>
+
+    <p class="mb-4">
+      <%= listing.description %>
+    </p>
+
+    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+    <div class="show-btns mb-4">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-dark">Edit</a>
+      <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display:inline;">
+        <button class="btn btn-outline-danger">Delete</button>
+      </form>
+    </div>
+    <% } %>
+
+    <div class="col-8 mb-4 show-review">
+      <% if(currUser) { %>
+      <hr />
+      <h4>Leave a Review</h4>
+      <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+        <div class="mb-3 mt-3">
+          <label for="rating" class="form-label">Rating</label>
+          <fieldset class="starability-slot">
+            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+        <div class="mb-3">
+          <label for="comment" class="form-label">Comment</label>
+          <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+          <div class="invalid-feedback">Please add a comment for review</div>
+        </div>
+        <button class="btn btn-outline-dark">Submit</button>
+      </form>
+      <% } %>
+      <hr />
+
+      <% if(listing.reviews.length> 0) { %>
+      <p><b>All Reviews</b></p>
+      <div class="row">
+        <% for(review of listing.reviews) { %>
+        <div class="col-md-5 me-3 mb-4 review-card p-3">
+          <h6 class="text-muted">@<%= review.author.username %></h6>
+          <p class="starability-result" data-rating="<%= review.rating %>"></p>
+          <p><%= review.comment %></p>
+          <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
           </form>
         </div>
         <% } %>
-
-          <div class="col-8 mb-4 show-review">
-            <% if(currUser) { %>
-              <hr />
-              <h4>Leave a Review</h4>
-              <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-                <div class="mb-3 mt-3">
-                  <label for="rating" class="form-label">Rating</label>
-                  <fieldset class="starability-slot">
-                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
-                      aria-label="No rating." />
-                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                    <label for="first-rate1" title="Terrible">1 star</label>
-                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                    <label for="first-rate2" title="Not good">2 stars</label>
-                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                    <label for="first-rate3" title="Average">3 stars</label>
-                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                    <label for="first-rate4" title="Very good">4 stars</label>
-                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                    <label for="first-rate5" title="Amazing">5 stars</label>
-                  </fieldset>
-                </div>
-                <div class="mb-3">
-                  <label for="comment" class="form-label">Comment</label>
-                  <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control"
-                    required></textarea>
-                  <div class="invalid-feedback">Please add a comment for review</div>
-                </div>
-                <button class="btn btn-outline-dark">Submit</button>
-              </form>
-              <% } %>
-                <hr />
-
-                <% if(listing.reviews.length> 0) { %>
-                  <p><b>All Reviews</b></p>
-                  <div class="row">
-                    <% for(review of listing.reviews) { %>
-                      <div class="col-md-5 me-3 mb-4 review-card p-3">
-                        <h6 class="text-muted">@<%= review.author.username %>
-                        </h6>
-                        <p class="starability-result" data-rating="<%= review.rating %>"></p>
-                        <p>
-                          <%= review.comment %>
-                        </p>
-                        <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-                          method="post">
-                          <button class="btn btn-sm btn-outline-danger">Delete</button>
-                        </form>
-                      </div>
-                      <% } %>
-                  </div>
-
-
-                  <% } %>
-
-          </div>
-          <div class="card-text mb-3 map">
-            <h4 class="mt-5 mb-3">Where you'll be</h4>
-            <div class="map-container" data-lng="<%= listing.coordinates.lng %>"
-              data-lat="<%= listing.coordinates.lat %>" data-title="<%= listing.title %>"
-              style="width: 100%; height: 400px; position: relative"></div>
-          </div>
+      </div>
+      <% } %>
     </div>
 
+    <div class="card-text mb-3 map">
+      <h4 class="mt-5 mb-3">Where you'll be</h4>
+      <div class="map-container" data-lng="<%= listing.coordinates.lng %>" data-lat="<%= listing.coordinates.lat %>" data-title="<%= listing.title %>" style="width: 100%; height: 400px; position: relative"></div>
+    </div>
+    
   </div>
+</div>
 
-  <% if (listing.coordinates) { %>
+
+    <% if (listing.coordinates) { %>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         if (typeof tt === "undefined") {
@@ -195,8 +222,8 @@
     </script>
     <% } %>
 
-      <% if (listing.coordinates) { %>
-        <script>
+    <% if (listing.coordinates) { %>
+    <script>
           document.addEventListener("DOMContentLoaded", function () {
             if (typeof tt === "undefined") {
               console.error("TomTom Maps SDK not loaded");
@@ -256,5 +283,5 @@
           });
         </script>
 
-        <% } %>
-          </div>
+    <% } %>
+  </div>
