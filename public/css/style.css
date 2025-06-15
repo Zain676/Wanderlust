@@ -181,6 +181,22 @@ footer {
   object-fit: cover;
 }
 
+/* Smaller carousel controls */
+.carousel-control-prev, 
+.carousel-control-next {
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgb(0, 0, 0) !important;
+    border-radius: 50%;
+}
+
+.carousel-control-prev-icon, 
+.carousel-control-next-icon {
+    width: 1rem;
+    height: 1rem;
+}
 
 .show-title h3 {
   font-size: 2rem;
@@ -428,6 +444,6 @@ footer {
   }
   .shows {
     margin: 0% !important;
-    width: 97vw !important;
+    width: 96vw !important;
   }
 }
