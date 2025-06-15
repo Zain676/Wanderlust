@@ -1,32 +1,42 @@
 <% layout("/layouts/biolerplate") %>
 
-  <div class="row show mt-5">
-    <div class="col-md-10 offset-md-1">
+<div class="row show mt-5">
+  <div class="col-md-10 offset-md-1">
 
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
 
-      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="<%= listing.image.url %>" alt="Listing Image" class="show-img mb-4" />
-          </div>
-          <div class="carousel-item">
-            <img src="<%= listing.image.url %>" alt="Listing Image" class="show-img mb-4" />
-          </div>
-          <div class="carousel-item">
-            <img src="<%= listing.image.url %>" alt="Listing Image" class="show-img mb-4" />
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+    <!-- Add the main image first -->
+    <% if (listing.image && listing.image.url) { %>
+      <div class="carousel-item active">
+        <img src="<%= listing.image.url %>" alt="Main Listing Image" class="show-img mb-4" />
       </div>
+    <% } %>
+
+    <!-- Add other images from listing.images[] (skip duplicates) -->
+    <% listing.images.forEach(img => { %>
+      <% if (!listing.image || img.url !== listing.image.url) { %>
+        <div class="carousel-item">
+          <img src="<%= img.url %>" alt="Listing Image" class="show-img mb-4" />
+        </div>
+      <% } %>
+    <% }) %>
+
+  </div>
+
+  <% if ((listing.images.length + (listing.image ? 1 : 0)) > 1) { %>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  <% } %>
+</div>
+
+
 
       <h3 class="mb-3">
         <%= listing.title %>

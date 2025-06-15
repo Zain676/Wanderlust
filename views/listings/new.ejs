@@ -1,79 +1,165 @@
 <% layout("/layouts/biolerplate") %>
 
-  <body>
-    <div class="row mt-4">
-      <div class="col-8 offset-2 new-form">
-        <h3 class="mb-4">Create a New Listing</h3>
-        <form action="/listings" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-          <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="listing[title]" placeholder="Catchy title"
+<body>
+  <div class="row mt-4">
+    <div class="col-8 offset-2 new-form">
+      <h3 class="mb-4">Create a New Listing</h3>
+      <form
+        action="/listings"
+        method="POST"
+        class="needs-validation"
+        enctype="multipart/form-data"
+        novalidate>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="listing[title]"
+            placeholder="Catchy title"
+            required />
+          <div class="invalid-feedback">Title should be valid</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            name="listing[description]"
+            class="form-control"
+            id="description"
+            placeholder="Describe the unique features of your property or experience"
+            required></textarea>
+          <div class="invalid-feedback">Please enter a short description</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Main Image</label>
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            name="image"
+            required
+            accept=".png,.jpg,.jpeg" />
+        </div>
+
+        <div class="mb-3">
+          <label for="images" class="form-label">Upload Additional
+            Images</label>
+          <input
+            type="file"
+            class="form-control"
+            id="images"
+            name="images"
+            multiple
+            accept=".png,.jpg,.jpeg" />
+        </div>
+
+                <div class="mb-3">
+          <label for="images" class="form-label">Upload Additional
+            Images</label>
+          <input
+            type="file"
+            class="form-control"
+            id="images"
+            name="images"
+            multiple
+            accept=".png,.jpg,.jpeg" />
+        </div>
+
+                <div class="mb-3">
+          <label for="images" class="form-label">Upload Additional
+            Images</label>
+          <input
+            type="file"
+            class="form-control"
+            id="images"
+            name="images"
+            multiple
+            accept=".png,.jpg,.jpeg" />
+        </div>
+
+                <div class="mb-3">
+          <label for="images" class="form-label">Upload Additional
+            Images</label>
+          <input
+            type="file"
+            class="form-control"
+            id="images"
+            name="images"
+            multiple
+            accept=".png,.jpg,.jpeg" />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input
+              class="form-control"
+              type="number"
+              id="price"
+              name="listing[price]"
+              placeholder="Set the price per night"
               required />
-            <div class="invalid-feedback">Title should be valid</div>
+            <div class="invalid-feedback">Price should be valid</div>
           </div>
 
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="listing[description]" class="form-control" id="description"
-              placeholder="Describe the unique features of your property or experience" required></textarea>
-            <div class="invalid-feedback">Please enter a short description</div>
+          <div class="mb-3 col-md-8">
+            <label for="city" class="form-label">City</label>
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              name="listing[city]"
+              placeholder="Where is your property located?"
+              required />
+            <div class="invalid-feedback">City should be valid</div>
           </div>
+        </div>
 
-          <div class="mb-3">
-            <label for="image" class="form-label">Upload Image</label>
-            <input type="file" class="form-control" id="image" name="listing[image]" required
-              accept=".png,.jpg,.jpeg" />
-          </div>
+        <div class="mb-3">
+          <label for="country" class="form-label">Country</label>
+          <input
+            type="text"
+            class="form-control"
+            id="country"
+            name="listing[country]"
+            placeholder="Enter the name of the country"
+            required />
+          <div class="invalid-feedback">Country name should be valid</div>
+        </div>
 
-          <div class="row">
-            <div class="mb-3 col-md-4">
-              <label for="price" class="form-label">Price</label>
-              <input class="form-control" type="number" id="price" name="listing[price]"
-                placeholder="Set the price per night" required />
-              <div class="invalid-feedback">Price should be valid</div>
-            </div>
-
-            <div class="mb-3 col-md-8">
-              <label for="city" class="form-label">City</label>
-              <input type="text" class="form-control" id="city" name="listing[city]"
-                placeholder="Where is your property located?" required />
-              <div class="invalid-feedback">City should be valid</div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" class="form-control" id="country" name="listing[country]"
-              placeholder="Enter the name of the country" required />
-            <div class="invalid-feedback">Country name should be valid</div>
-          </div>
-
-          <div class="mb-3">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select" id="category" name="listing[category]" required>
-              <option value="">Choose a category</option>
-              <option value="Budget">Budget</option>
-              <option value="Luxury">Luxury</option>
-              <option value="Family">Family</option>
-              <option value="Pet Friendly">Pet Friendly</option>
-              <option value="Beachside">Beachside</option>
-              <option value="Mountain">Mountain</option>
-              <option value="Private Room">Private Room</option>
-              <option value="Entire Home">Entire Home</option>
-              <option value="With Pool">With Pool</option>
-              <option value="Free Parking">Free Parking</option>
-              <option value="WiFi">WiFi</option>
-              <option value="City Center">City Center</option>
-              <option value="Quiet Area">Quiet Area</option>
-              <option value="Couples">Couples</option>
-              <option value="Adventure">Adventure</option>
-              <option value="Nature Stay">Nature Stay</option>
-              <option value="Unique Stays">Unique Stays</option>
-            </select>
-            <div class="invalid-feedback">Please select a category</div>
-          </div>
-          <button class="btn btn-dark add-btn mb-3">Add</button>
-        </form>
-      </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select
+            class="form-select"
+            id="category"
+            name="listing[category]"
+            required>
+            <option value>Choose a category</option>
+            <option value="Budget">Budget</option>
+            <option value="Luxury">Luxury</option>
+            <option value="Family">Family</option>
+            <option value="Pet Friendly">Pet Friendly</option>
+            <option value="Beachside">Beachside</option>
+            <option value="Mountain">Mountain</option>
+            <option value="Private Room">Private Room</option>
+            <option value="Entire Home">Entire Home</option>
+            <option value="With Pool">With Pool</option>
+            <option value="Free Parking">Free Parking</option>
+            <option value="WiFi">WiFi</option>
+            <option value="City Center">City Center</option>
+            <option value="Quiet Area">Quiet Area</option>
+            <option value="Couples">Couples</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Nature Stay">Nature Stay</option>
+            <option value="Unique Stays">Unique Stays</option>
+          </select>
+          <div class="invalid-feedback">Please select a category</div>
+        </div>
+        <button class="btn btn-dark add-btn mb-3">Add</button>
+      </form>
     </div>
-  </body>
+  </div>
+</body>

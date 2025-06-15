@@ -14,9 +14,11 @@ router
   .get(wrapAsync(listingController.index))
   .post(
     isLoggedIn,
-    upload.single("listing[image]"),
+    upload.fields([
+      { name: "image", maxCount: 1 },         
+      { name: "images", maxCount: 4 },       
+    ]),
     wrapAsync(listingController.createListing)
-    
   );
 
 // New Route
@@ -30,7 +32,10 @@ router
   .put(
     isLoggedIn,
     isOwner,
-    upload.single("listing[image]"),
+    upload.fields([
+      { name: "image", maxCount: 1 },         // main image
+      { name: "images", maxCount: 4 },        // additional images
+    ]),
     validateListing,
     wrapAsync(listingController.updateListing)
   )

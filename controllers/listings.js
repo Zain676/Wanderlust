@@ -43,15 +43,33 @@ module.exports.createListing = async (req, res, next) => {
 
     const { lat, lon: lng } = results[0].position;
 
-    let url = req.file?.path || "";
-    let filename = req.file?.filename || "";
+    let images = req.files.map((file) => ({
+      url: file.path,
+      filename: file.filename,
+    }));
 
     const newListing = new Listing({
       ...req.body.listing,
       coordinates: { lat, lng },
+      images,
       owner: req.user._id,
-      image: { url, filename },
     });
+
+    // Main image
+    const mainImage = req.files["image"]?.[0];
+    if (mainImage) {
+      newListing.image = {
+        url: mainImage.path,
+        filename: mainImage.filename,
+      };
+    }
+
+    // Additional images
+    const additionalImages = req.files["images"] || [];
+    newListing.images = additionalImages.map((file) => ({
+      url: file.path,
+      filename: file.filename,
+    }));
 
     await newListing.save();
     req.flash("success", "New Listing Created");
