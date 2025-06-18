@@ -162,4 +162,21 @@
       </form>
     </div>
   </div>
+
+  <script>
+  // Show loader on any form submit
+  document.querySelectorAll("form").forEach(form => {
+    form.addEventListener("submit", function () {
+      document.getElementById("loader-overlay").style.display = "flex";
+    });
+  });
+
+  // Show loader on delete link clicks (if using anchor with JS)
+  document.querySelectorAll(".show-loader").forEach(button => {
+    button.addEventListener("click", function () {
+      document.getElementById("loader-overlay").style.display = "flex";
+    });
+  });
+</script>
+
 </body>
